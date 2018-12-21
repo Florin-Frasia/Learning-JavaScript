@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Operatii cu numere complexe</title>
+  <style type="text/css">
+    html, body {
+      height: 100%;
+    }
+    body {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .flex-container {
+      padding: 5px;
+      margin: 0;
+      background-color: red;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      }
+      p, div {
+        margin: 0px;
+      }
+      input {
+        margin:3px;
+      }
+      #yellow {
+        display: block;
+        box-sizing: border-box;
+        background-color: yellow;
+        margin-top: 0.3em;
+        padding: 0.4em;
+      }
+      p:first-child {
+        background-color: yellow;
+        margin-bottom: 0.3em;
+        padding: 0.4em;
+      }
+      i:first-child {
+        display: block;
+        margin-top: 0.3em;
+        margin-bottom: -0.5em;
+      }
+  </style>
+  <script>
+    function Complex(real, img) {
+      this.real = real;
+      this.img = img;
+      this.getReal = getReal;
+      this.getImg = getImg;
+      this.add = add;
+
+    }
+    function getReal() {
+      return this.real;
+    }
+
+    function getImg() {
+      return this.img;
+    }
+
+    function add(zed) {
+      var a;
+      var b;
+      var rz;
+      a = this.real + zed.getReal(zed);
+      b = this.img + zed.getImg(zed);
+      rz = new Complex(a, b);
+      return rz;
+    }
+  </script>
+</head>
+<body>
+  <div class="flex-container">
+      <div id = "static-text">
+        <p>Adunarea a dou&#259; numere complexe:</p>
+        <p>z<sub>1</sub> = a<sub>1</sub> + b<sub>1</sub>i; z<sub>2</sub> = a<sub>2</sub> + b<sub>2</sub>i</p>
+        <p>z<sub>1</sub> + z<sub>2</sub> = (a<sub>1</sub> + a<sub>2</sub>) + (b<sub>1</sub> + b<sub>2</sub>)i</p>
+      </div>
+      <div id = "dinamic-text">
+        <form name = "form1" method="post" onsubmit="return input_number()">
+          <i>Introduce&#355;i:</i><br>
+          <label for="male"><b>Partea real&#259;</b>:</label>
+          <input type = "text" name = "real"><br>
+          <label for="male"><b>Partea imaginar&#259;</b>:</label>
+          <input type = "text" name = "imaginar"><br>
+          <i>a num&#259;rului complex z<sub id = "c">1</sub>.<br>
+            <input type="submit" value="Trimite">
+        </form>
+      </div>
+    <script>
+    var n = 0;
+    var matrice = [];
+    function input_number() {
+      var re = Number(document.form1.real.value);
+      var img = Number(document.form1.imaginar.value);
+      matrice.push([re, img]);
+      var z1 = re.toString() + " +" + img.toString() +"i";
+      document.getElementById("c").innerHTML = "2";
+      var form = document.getElementById("dinamic-text").innerHTML;
+      n++;
+      document.getElementById("static-text").innerHTML += "<b>z<sub>" + n + "</sub> =" + z1 + "</b><br>";
+      if (n < 2) {
+      document.getElementById("dinamic-text").innerHTML = form;
+      } else {
+        var x = new Complex(matrice[0][0], matrice[0][1]);
+        var y = new Complex(matrice[1][0], matrice[1][1]);
+        var z = x.add(y);
+        var real = z.real;
+        var img = z.img;
+        document.getElementById("dinamic-text").innerHTML = "<b id = 'yellow'>z<sub>1</sub> + z<sub>2</sub> = " + real + " + " + img + "i</b>";
+      }
+    }
+  </script>
+  </div>
+</body>
+</html>
